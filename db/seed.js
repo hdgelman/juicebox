@@ -128,12 +128,14 @@ const createInitialPosts = async () => {
             content: "Do you even? I swear that half of you are posing.",
             tags: ["#happy", "#youcandoanything", "#canmandoeverything"]
         });
+
         console.log("Finished creating posts!");
     } catch (error) {
         console.log("Error creating posts!");
         throw error;
     }
 }
+
 
 //REBUILD
 const rebuildDB = async () => {
