@@ -8,7 +8,8 @@ const {
     createPost,
     updatePost,
     getAllPosts,
-    getPostsByTagName
+    getPostsByTagName,
+    getUserByUsername
 } = require('./index');
 
 //TABLES
