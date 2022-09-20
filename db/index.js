@@ -84,7 +84,7 @@ const createPost = async ({
     authorId,
     title,
     content,
-    tags = [] // this is new
+    tags = []
 }) => {
     try {
         const { rows: [post] } = await client.query(`
@@ -244,7 +244,7 @@ const addTagsToPost = async (postId, tagList) => {
     }
 }
 
-async function getPostsByTagName(tagName) {
+const getPostsByTagName = async (tagName) => {
     try {
         const { rows: postIds } = await client.query(`
         SELECT posts.id
@@ -269,6 +269,13 @@ const getPostById = async (postId) => {
         FROM posts
         WHERE id=$1;
       `, [postId]);
+
+        if (!post) {
+            throw {
+                name: "PostNotFoundError",
+                message: "Could not find a post with that postId"
+            };
+        }
 
         const { rows: tags } = await client.query(`
         SELECT tags.*

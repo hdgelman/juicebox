@@ -1,5 +1,5 @@
 const express = require('express');
-const { client } = require('../db');
+const { client, getPostsByTagName } = require('../db');
 const tagsRouter = express.Router();
 
 tagsRouter.use((req, res, next) => {
@@ -20,6 +20,23 @@ tagsRouter.get('/', async (req, res, next) => {
 
     } catch (error) {
         next()
+    }
+});
+
+tagsRouter.get('/:tagName/posts', async (req, res, next) => {
+    // read the tagname from the params
+    try {
+        const tags = await getPostsByTagName()
+
+        return (
+            tags,
+            res.send({ posts: tags })
+        )
+        // use our method to get posts by tag name from the db
+        // send out an object to the client { posts: // the posts }
+    } catch ({ name, message }) {
+        next({ name, message })
+        // forward the name and message to the error handler
     }
 });
 
